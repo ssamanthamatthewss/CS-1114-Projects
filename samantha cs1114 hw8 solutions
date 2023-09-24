@@ -1,0 +1,120 @@
+
+"""
+Author: [Samantha Matthews]
+Assignment / Part: HW8 - Q1 (depending on the file name)
+Date due: 2022-11-17, 11:59pm
+I pledge that I have completed this assignment without
+collaborating with anyone else, in conformance with the
+NYU School of Engineering Policies and Procedures on
+Academic Misconduct.
+"""
+
+
+def get_nucleotide_frequencies(nucleotides):
+	junk_nucleotides = {}
+	junk_frequency = 0
+	nucleotide_frequency = { "junk": junk_nucleotides}
+	for character in nucleotides:
+		character = character.upper()
+		if character in "ACTG":
+			if character in nucleotide_frequency:
+				nucleotide_frequency[character] += 1
+			else:
+				junk_nucleotides[character] = 1
+		elif character not in "ACTG":
+			junk_frequency += 1
+			if character in nucleotide_frequency["junk"]:
+				nucleotide_frequency["junk"][character] += 1
+			else:
+				nucleotide_frequency["junk"][character] = 1
+	return nucleotide_frequency, junk_frequency
+
+
+
+
+
+
+
+def main():
+	print(get_nucleotide_frequencies("ACTGTCaCGRFRTNfsHYCgggTCGACCSGTGTCACGT"))
+
+main()
+
+"""
+Author: [Samantha Matthews]
+Assignment / Part: HW8 - Q2 (depending on the file name)
+Date due: 2022-11-17, 11:59pm
+I pledge that I have completed this assignment without
+collaborating with anyone else, in conformance with the
+NYU School of Engineering Policies and Procedures on
+Academic Misconduct.
+"""
+# split by comma, then use the indicies of the parameters in create entry to access them in those lines, convert the string of numbers to integers
+# pass that through create entry and use the name of the pokemon as the key and whatever create entry returns as a value
+
+def create_entry(number, name, type_1, type_2, health_points, attack, defense, speed, is_legendary):
+
+	pokemon_dict = {}
+	pokemon_dict["Number"] = int(number)
+	pokemon_dict["Name"] = str(name)
+	if type_2:
+		pokemon_dict["Types"] = (str(type_1),str(type_2))
+	else:
+		pokemon_dict["Types"] = (type_1, None)
+
+	stats = {'HP': int(health_points), 'Attack': attack, 'Defense': defense, "Speed": speed}
+	pokemon_dict["Battle Status"] = stats
+	pokemon_dict["Legendary"] = is_legendary
+
+	return pokemon_dict
+
+POKEMON_DATA = """#,Name,Type 1,Type 2,Total,HP,Attack,Defense,Sp. Atk,Sp.
+Def,Speed,Generation,Legendary
+1,Bulbasaur,Grass,Poison,318,45,49,49,65,65,45,1,False
+2,Ivysaur,Grass,Poison,405,60,62,63,80,80,60,1,False
+3,Venusaur,Grass,Poison,525,80,82,83,100,100,80,1,False
+3,VenusaurMega Venusaur,Grass,Poison,625,80,100,123,122,120,80,1,False
+4,Charmander,Fire,,309,39,52,43,60,50,65,1,False"""
+
+def create_pokedex(pokemon_data):
+	pokedex_dict = {}
+
+	pokemon_data = pokemon_data.split("\n")[1:] #IF WE WANT TO GET RID OF THE HEADER WE SKIP OTH ELEMENT
+	for line in pokemon_data:
+		line = line.strip().split(",")
+		print(line)
+		for pokemon in line:
+			pokedex_dict[pokemon[1]] = create_entry(int(pokemon[0]), pokemon[1],pokemon[2], pokemon[3], int(pokemon[4]), int(pokemon[5]),int(pokemon[6]),int(pokemon[7]), pokemon[8] == "True")
+
+
+	return pokedex_dict
+
+
+
+
+def main():
+	pokedex = create_pokedex(POKEMON_DATA)
+	pokemon_key = "Ivysaur"
+	my_favorite_pokemon = pokedex[pokemon_key]
+	if pokemon_key not in pokedex:
+		print(f"ERROR: Pokemon {pokemon_key} does not exist!")
+	else:
+		print(f"PRINTING {pokemon_key}'S INFORMATION...")
+		for key in my_favorite_pokemon.keys():
+			print(f"{key}: {my_favorite_pokemon[key]}")
+
+main()
+
+
+"""
+Author: [Samantha Matthews]
+Assignment / Part: HW8 - Q3 (depending on the file name)
+Date due: 2022-11-17, 11:59pm
+I pledge that I have completed this assignment without
+collaborating with anyone else, in conformance with the
+NYU School of Engineering Policies and Procedures on
+Academic Misconduct.
+"""
+
+false = "False"
+print(bool(false))
