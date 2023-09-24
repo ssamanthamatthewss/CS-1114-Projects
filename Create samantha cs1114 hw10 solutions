@@ -1,0 +1,108 @@
+
+
+
+"""
+Author: [Samantha Matthews]
+Assignment / Part: HW10 - Q1
+Date due: 2022-12-08, 11:59pm
+I pledge that I have completed this assignment without
+collaborating with anyone else, in conformance with the
+NYU School of Engineering Policies and Procedures on
+Academic Misconduct.
+"""
+import random
+class Instrument:
+
+	def __init__(self, model, brand, strength):
+		self.model = model
+		self.brand = brand
+		self.strength = strength
+
+	def __repr__(self):
+		brand = self.brand
+		model = self.model
+		strength = self.strength * 100
+		final_format =  brand + " " + model + " (" + str(strength) + "/" + "100 strength)"
+		return final_format
+
+	def does_break(self):
+		random_float = random.randrange(0,2)
+		if random_float < (self.strength * 0.5):
+			return True
+		else:
+			return False
+
+
+def main():
+
+	danelectro = Instrument("Stock '59", "Danelectro", 0.25)
+	print(danelectro)
+	number_of_tests = 100
+	number_of_breaks = 0
+	for i in range(number_of_tests):
+		if danelectro.does_break():
+			number_of_breaks += 1
+	percentage = (number_of_breaks / number_of_tests) * 100
+	print(f"The {danelectro.model} broke {round(percentage)}% of the time in {number_of_tests} tests!")
+
+main()
+
+"""
+Author: [Samantha Matthews]
+Assignment / Part: HW10 - Q2
+Date due: 2022-12-08, 11:59pm
+I pledge that I have completed this assignment without
+collaborating with anyone else, in conformance with the
+NYU School of Engineering Policies and Procedures on
+Academic Misconduct.
+"""
+from hw10_q1 import Instrument
+import random
+class Musician:
+
+	def __init__(self, stage_name, instruments):
+		self.stage_name = stage_name
+		self.instruments = instruments
+		self.number_of_instruments = len(self.instruments)
+
+	def __repr__(self):
+		musician = self.stage_name
+		final_message = "Musician object " + musician + "owning a"
+		for instrument in self.instruments[:len(self.instruments)]:
+			final_message += instrument.model + ", "
+		final_message += self.instruments[-1].model
+		return final_message
+
+	def pick_instrument(self, instrument_index=None):
+		if instrument_index == []:
+			return None
+		elif instrument_index == None:
+			random_instrument = random.choice(self.instruments)
+			return random_instrument
+		elif instrument_index > len(self.instruments):
+			return self.instruments[-1]
+
+
+import random
+from hw10_q2 import Musician
+from hw10_q1 import Instrument
+
+def get_name_of_battle_winner(musician_one, musician_two):
+
+	musician_one = Musician.pick_instrument(musician_one)
+	musician_two = Musician.pick_instrument(musician_two)
+	if len(musician_one.pick_instrument()) and len(musician_two.pick_instrument()) < 1:
+		return "NO CONTEST"
+	elif len(musician_one)  < 1 and len(musician_two) > 1:
+		return musician_two.stage_name
+	elif len(musician_two) < 1 and len(musician_one)  > 1:
+		return musician_one.stage_name
+	for strength in musician_one:
+		for strength_2 in musician_two:
+			if strength[-1] > strength_2[-1]:
+				musician_one.does_break()
+				return musician_two.stage_name
+			elif strength[-1] == strength[-2]:
+				winners = [musician_one.stage_name, musician_two.stage_name]
+				return random.choice(winners)
+
