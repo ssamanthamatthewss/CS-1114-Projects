@@ -1,0 +1,158 @@
+"""
+Author: [Samantha Matthews]
+Assignment / Part: HW4 - Q1 (depending on the file name)
+Date due: 2022-10-14, 11:59pm
+I pledge that I have completed this assignment without
+collaborating with anyone else, in conformance with the
+NYU School of Engineering Policies and Procedures on
+Academic Misconduct.
+"""
+
+user_positive_integer = int(input("Please enter a positive integer:"))
+print("Executing while-loop...")
+counter = 0
+starting_odd_number = 1
+print(starting_odd_number)
+while counter < user_positive_integer - 1:
+	starting_odd_number = starting_odd_number + 2
+	print(starting_odd_number)
+	counter += 1
+
+print("Executing for-loop...")
+
+for i in range (1,user_positive_integer *2, 2):
+	print(i)
+
+
+"""
+Author: [Samantha Matthews]
+Assignment / Part: HW4 - Q2 (depending on the file name)
+Date due: 2022-10-14, 11:59pm
+I pledge that I have completed this assignment without
+collaborating with anyone else, in conformance with the
+NYU School of Engineering Policies and Procedures on
+Academic Misconduct.
+"""
+
+user_positive_integer = int(input("Please enter a positive integer:"))
+
+for i in range(1, user_positive_integer):
+	stars = (2 * user_positive_integer) - (2 * i - 1)
+	space = i-1
+	print(space * " " + stars * '*')
+
+for i in range(user_positive_integer - 1, -1, -1):
+	stars = (2 * user_positive_integer) - (2 * i + 1)
+	space = i
+	print(space * " " + stars * "*")
+
+"""
+Author: [Samantha Matthews]
+Assignment / Part: HW4 - Q3 (depending on the file name)
+Date due: 2022-10-14, 11:59pm
+I pledge that I have completed this assignment without
+collaborating with anyone else, in conformance with the
+NYU School of Engineering Policies and Procedures on
+Academic Misconduct.
+"""
+
+user_positive_input = int(input("Put in a positive integer: "))
+
+for i in range(1,user_positive_input+1):
+	line = (user_positive_input - i) * " "
+	for s in range(1, i +1):
+		line += str(s)
+	print(line)
+
+"""
+Author: [Samantha Matthews]
+Assignment / Part: HW4 - Q4 (depending on the file name)
+Date due: 2022-10-14, 11:59pm
+I pledge that I have completed this assignment without
+collaborating with anyone else, in conformance with the
+NYU School of Engineering Policies and Procedures on
+Academic Misconduct.
+"""
+
+user_n = int(input("input a positive number: "))
+# remaining_digits = user_n // 10
+# more_remaining_digits = remaining_digits // 10
+line = ""
+
+for i in range(1, user_n):
+	even = 0
+	odd = 0
+	original_number = i
+	while i > 0:
+		last_digit = i % 10
+		i = i // 10
+
+		if last_digit % 2 == 0:
+			even += 1
+		else:
+			odd += 1
+	if even > odd:
+		line += " " + str(original_number)
+
+print(line)
+
+
+"""
+Author: [Samantha Matthews ]
+Assignment / Part: HW4 - Q5 (depending on the file name)
+Date due: 2022-10-14, 11:59pm
+I pledge that I have completed this assignment without
+collaborating with anyone else, in conformance with the
+NYU School of Engineering Policies and Procedures on
+Academic Misconduct.
+"""
+
+num_of_players = int(input("Enter a valid number of players: "))
+winner = 0
+max=0
+for i in range(1, num_of_players + 1):
+	while num_of_players < 2 or num_of_players > 8:
+		num_of_players = int(input("Enter a valid number of players: "))
+
+	total_property_assets_string = " "
+	total_property_assets = 0
+
+
+	"""
+	checks for all players properties
+	"""
+
+	user_property_asset = input("Enter the value of a property/asset, or DONE to finish:")
+
+	while str(user_property_asset) != "DONE":
+
+		total_property_assets += float(user_property_asset)
+		if max < total_property_assets:
+				max = total_property_assets
+				winner+=1
+
+
+
+
+		user_property_asset = input("Enter the value of a property/asset, or DONE to finish:")
+
+
+
+
+	print("player",i," has",total_property_assets, "dollars")
+	print(winner, "wins with ",max, "!")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
