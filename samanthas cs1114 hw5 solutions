@@ -1,0 +1,295 @@
+"""
+Author: Sebastián Romero Cruz
+NYU Tandon School of Engineering
+CS-UY 1114
+Fall 2022
+"""
+from enum import Enum
+
+
+class Direction(Enum):
+    """
+    Determines direction in Arpeggiator method play()
+    """
+    UP = 0
+    DOWN = 1
+
+
+class Arpeggiator:
+    ROOTS = ('A', 'B', 'C', 'D', 'E', 'F', 'G')
+    NOTE_TYPES = ('b', '#', '')
+    INVALID_NOTES = ("B#", "Cb", "E#", "Fb")
+    _ROOT_IDX = 0
+    _MIN_NOTE_LEN = 1
+    _UP_DIRECTIONS = 'Uu'
+    _DOWN_DIRECTIONS = 'Dd'
+
+    @staticmethod
+    def _is_valid_note(note: str) -> bool:
+        """
+        Returns True if parameter note is any permutation of ROOTS and NOTE_TYPE (in that order i.e. "A", "Bb", "F#",
+        etc.); False otherwise.
+
+        :param note: A str representing a musical note
+        :return: True or False
+        """
+        if type(note) != str:
+            raise TypeError("Notes must be str types.")
+
+        if len(note) < Arpeggiator._MIN_NOTE_LEN:
+            return False
+
+        root, note_type = note[Arpeggiator._ROOT_IDX], note[Arpeggiator._ROOT_IDX + 1:]
+
+        return root in Arpeggiator.ROOTS and \
+               note_type in Arpeggiator.NOTE_TYPES and \
+               root + note_type not in Arpeggiator.INVALID_NOTES
+
+    def __init__(self):
+        """
+        The Arpeggiator class initialiser.
+        """
+        self.possible_notes: tuple[str] = (root + note_type for root in Arpeggiator.ROOTS for note_type in Arpeggiator.NOTE_TYPES)
+
+        self._notes: list[int] = []
+        self._direction: Direction = Direction.UP
+
+    def add_note(self, note: str):
+        """
+        Appends a user-inputted valid note (see: _is_valid_note()) to the Arpeggiator object.
+
+        :param note: A string representing a musical note
+        :return: None
+        """
+        if not self._is_valid_note(note):
+            print("WARNING: '{}' is not a valid note.".format(note))
+            print("VALID NOTES: {}".format(
+                ", ".join(note for note in self.possible_notes if note not in Arpeggiator.INVALID_NOTES)
+            ), end="\n\n")
+            return
+
+        self._notes.append(note)
+        print("Note '{}' added!\n".format(note))
+
+    def play(self, direction: Direction = Direction.UP):
+        """
+        Prints a simple visualisation of an arpeggiator being played. For example, if the notes stored in the
+        arpeggiator are Bb, A#, D, Fb, and G the visualisation will look like:
+
+        ~Bb
+        ~~~A#
+        ~~~~~D
+        ~~~G
+        ~D#
+
+        The user may also choose if the arpeggiator is to be played up or down.
+
+        :param direction: An enum of type Direction
+        :return: None
+        """
+        if (direction == Direction.DOWN and self._direction == Direction.UP) or \
+                (direction == Direction.UP and self._direction == Direction.DOWN):
+            self._notes.reverse()
+
+        mid = len(self._notes) // 2
+
+        for index in range(mid):
+            print('~' * ((index + 1) * 2 - 1) + self._notes[index])
+
+        if len(self._notes) % 2 == 1:
+            print('~' * ((mid + 1) * 2 - 1) + self._notes[mid])
+
+        for index in range(mid, 0, -1):
+            print('~' * (index * 2 - 1) + self._notes[len(self._notes) - index])
+
+    def __str__(self) -> str:
+        return "Arpeggiator (notes: {})".format(
+            ", ".join(note for note in self._notes)
+        )
+
+
+if __name__ == '__main__':
+    arp = Arpeggiator()
+    arp.add_note('Bb')
+    arp.add_note("A#")
+    arp.add_note('D')
+    arp.add_note('Fb')
+    arp.add_note('G')
+    arp.add_note('D#')
+    arp.add_note("Done")
+
+    print(arp)
+
+    arp.play()
+
+
+
+
+
+"""
+Author: [Samantha Matthews]
+Assignment / Part: HW5 - Q1 (depending on the file name)
+Date due: 2022-10-20, 11:59pm
+I pledge that I have completed this assignment without
+collaborating with anyone else, in conformance with the
+NYU School of Engineering Policies and Procedures on
+Academic Misconduct.
+"""
+
+user_string = input( "Say something:")
+returned_message = ""
+changed_letters = 0
+unchanged_letters = 0
+
+
+non_alpha_char = 0
+
+for char in range(len(user_string)):
+	if 65 <= ord(user_string[char]) <= 90:
+		change_to_lower = ord(user_string[char]) + 32
+		changed_letters += 1
+		returned_message = returned_message + chr(change_to_lower)
+	elif 97 <= ord(user_string[char]) <= 122:
+		unchanged_letters += 1
+		returned_message = returned_message + user_string[char]
+	else:
+		non_alpha_char += 1
+		returned_message = returned_message + user_string[char]
+
+
+print(returned_message)
+print(" Number of changed letters: ",changed_letters,"\n", "Number of unchanged letters: ", unchanged_letters, "\n","Number of non-alphabetic characters:", non_alpha_char)
+
+
+      """
+Author: [Samantha Matthews]
+Assignment / Part: HW5 - Q2 (depending on the file name)
+Date due: 2022-10-20, 11:59pm
+I pledge that I have completed this assignment without
+collaborating with anyone else, in conformance with the
+NYU School of Engineering Policies and Procedures on
+Academic Misconduct.
+"""
+user_dna_sequence = input("Enter a DNA sequence:")
+user_second_sequence = input("Enter a second DNA sequence: ")
+new_user_dna_sequence = " "
+new_second_sequence = " "
+fused_sequence = " "
+invalid_characters_count = 0
+compliment_sequence = " "
+
+"""
+gets me g :     if ord(char) != ord("B") and ord(char) != ord("D") and ord(char) != ord("E") and ord(char) != ord("F") and ord(char) < ord("H") :
+87 <= numerical_grade < 89:
+BDEF
+the following code checks for a letter that isnt A,C,T or G and keeps track of the invalid characters, 
+and replaces it with a empty string
+"""
+
+for char in user_dna_sequence:
+    if ord(char) != ord("B") and ord(char) != ord("D") and ord(char) != ord("E") and ord(char) != ord("F") and ord(char) != ord("H") and ord(char) != ord("I") and ord(char) != ord("J") and ord(char) != ord("K") and ord(char) != ord("L") and ord(char) != ord("M") and ord(char) != ord("N") and ord(char) != ord("O") and ord(char) != ord("P") and ord(char) != ord("Q") and ord(char) != ord("R") and ord(char) != ord("S") and ord(char) != ord("U") and ord(char) != ord("V") and ord(char) != ord("W") and ord(char) != ord("X") and ord(char) != ord("Y") and ord(char) != ord("Z"):
+
+        new_user_dna_sequence += char
+invalid_characters_count += len(user_dna_sequence) - len(new_user_dna_sequence)
+
+print(new_user_dna_sequence)
+
+for char in user_second_sequence:
+    if ord(char) != ord("B") and ord(char) != ord("D") and ord(char) != ord("E") and ord(char) != ord("F") and ord(char) != ord("H") and ord(char) != ord("I") and ord(char) != ord("J") and ord(char) != ord("K") and ord(char) != ord("L") and ord(char) != ord("M") and ord(char) != ord("N") and ord(char) != ord("O") and ord(char) != ord("P") and ord(char) != ord("Q") and ord(char) != ord("R") and ord(char) != ord("S") and ord(char) != ord("U") and ord(char) != ord("V") and ord(char) != ord("W") and ord(char) != ord("X") and ord(char) != ord("Y") and ord(char) != ord("Z"):
+
+        new_second_sequence += char
+
+invalid_characters_count += invalid_characters_count + (len(user_second_sequence) - len(new_second_sequence))
+
+
+print(new_second_sequence)
+
+if len(new_user_dna_sequence) > len(new_second_sequence):
+    longest_len = len(new_user_dna_sequence)
+else:
+    longest_len = len(new_second_sequence)
+
+
+for index in range(longest_len):
+    if index < len(new_user_dna_sequence):
+        fused_sequence += new_user_dna_sequence[index]
+
+    if index < len(new_second_sequence):
+        fused_sequence += new_second_sequence[index]
+
+
+"""
+this portion of the program creates the compliment sequence
+"""
+for char in fused_sequence:
+    if char in fused_sequence == "A":
+        compliment_sequence = fused_sequence.replace("A", "T")
+    elif char in fused_sequence == "C":
+        compliment_sequence = fused_sequence.replace("C", "G")
+    elif char in fused_sequence == "T":
+        compliment_sequence = fused_sequence.replace("T", "A")
+    elif char in fused_sequence == "G":
+        compliment_sequence = fused_sequence.replace("G", "C")
+
+print("Fused sequence:", compliment_sequence, "| Invalid characters:", invalid_characters_count)
+
+"""
+Author: [Samantha Matthews]
+Assignment / Part: HW5 - Q3 (depending on the file name)
+Date due: 2022-10-20, 11:59pm
+I pledge that I have completed this assignment without
+collaborating with anyone else, in conformance with the
+NYU School of Engineering Policies and Procedures on
+Academic Misconduct.
+"""
+
+
+user_string = input("Please enter a string of lowercase letters: ")
+
+is_decreasing = True
+for i in range(len(user_string)-1):
+	if user_string[i] < user_string[i+1]:
+		isDecreasing = False
+
+if is_decreasing == True:
+	print(user_string, "is decreasing")
+else:
+	print(user_string, "is not decreasing")
+"""
+Author: [Samantha Matthews]
+Assignment / Part: HW5 - Q4 (depending on the file name)
+Date due: 2022-10-20, 11:59pm
+I pledge that I have completed this assignment without
+collaborating with anyone else, in conformance with the
+NYU School of Engineering Policies and Procedures on
+Academic Misconduct.
+"""
+import arpeggiator
+ARPEGGIATOR = arpeggiator.Arpeggiator()
+UP = arpeggiator.Direction.UP
+DOWN = arpeggiator.Direction.DOWN
+
+user_musical_note = input("Enter a musical note (i.e. A, Db, C#, etc.) or 'DONE' to end: ")
+
+while user_musical_note != "DONE":
+
+	ARPEGGIATOR.add_note(user_musical_note)
+
+	user_musical_note = input("Enter a musical note (i.e. A, Db, C#, etc.) or 'DONE' to end: ")
+
+print(ARPEGGIATOR)
+user_direction = input("Enter an arpeggiator direction [U/D] ")
+while user_direction != "D" and user_direction != "U":
+	user_direction = input("Enter an arpeggiator direction [U/D] ")
+
+if user_direction == "D":
+	user_direction = DOWN
+elif user_direction == "U":
+	user_direction = UP
+
+user_play = int(input("How many times do you want your arpeggiator to play?: "))
+while user_play <= 0:
+	user_play = int(input("How many times do you want your arpeggiator to play? (Must be positive amount)"))
+for i in range(user_play):
+	ARPEGGIATOR.play(user_direction)
+
