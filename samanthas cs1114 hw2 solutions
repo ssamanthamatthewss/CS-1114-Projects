@@ -1,0 +1,114 @@
+import math
+
+"""
+Author: [Samantha Matthews]
+Assignment / Part: HW2 - Q1 (depending on the file name)
+Date due: 2022-09-29, 11:59pm
+I pledge that I have completed this assignment without
+collaborating with anyone else, in conformance with the
+NYU School of Engineering Policies and Procedures on
+Academic Misconduct.
+"""
+user_mass_first_object = float(input("Enter the mass of the first object: "))
+user_radius_first_object = float(input("Enter the radius of the first object: "))
+user_mass_second_object = float(input("Enter the mass of the second object: "))
+user_radius_second_object = float(input("Enter the radius of the second object:"))
+user_surface_object_distance = float(input("Enter the distance between the surfaces of both objects: "))
+gravitational_constant = 6 * 10 ** -11
+radius_distance = user_radius_second_object - user_radius_first_object
+force_of_gravity_formula = gravitational_constant * ((user_mass_first_object * user_mass_second_object) / math.pow(radius_distance, 2))
+distance = force_of_gravity_formula - user_surface_object_distance
+print("The force of gravitation between these two objects is ",distance, "N.")
+
+
+import math
+"""
+Author: [Samantha Matthews]
+Assignment / Part: HW2 - Q2 (depending on the file name)
+Date due: 2022-09-29, 11:59pm
+I pledge that I have completed this assignment without
+collaborating with anyone else, in conformance with the
+NYU School of Engineering Policies and Procedures on
+Academic Misconduct.
+"""
+user_frequency = float(input("Enter a value for the frequency, w: "))
+user_duration_value = float(input(("Enter a value for the duration of the sound wave, T: ")))
+fourier_transform_equation = (2 * (math.sin(user_frequency * user_duration_value))) / user_frequency
+fourier_transform_equation = round(fourier_transform_equation, 3)
+calculated_amplitude_spectrum = print("The amplitude spectrum of this Fourier transform is:", fourier_transform_equation)
+
+
+import random
+"""
+Author: [Samantha Matthews]
+Assignment / Part: HW2 - Q3 (depending on the file name)
+Date due: 2022-09-29, 11:59pm
+I pledge that I have completed this assignment without
+collaborating with anyone else, in conformance with the
+NYU School of Engineering Policies and Procedures on
+Academic Misconduct.
+"""
+hp_max = int(input("enter a value for hp max: "))
+hp_current = random.randint(1, hp_max)
+pokemon_ball_value = random.randint(1, 255)
+pokemon_formula = (hp_max * 255 * 4) / (hp_current * pokemon_ball_value)
+is_caught = pokemon_formula >= pokemon_ball_value
+print(is_caught)
+
+"""
+Author: [Samantha Matthews]
+Assignment / Part: HW2 - Q4 (depending on the file name)
+Date due: 2022-09-29, 11:59pm
+I pledge that I have completed this assignment without
+collaborating with anyone else, in conformance with the
+NYU School of Engineering Policies and Procedures on
+Academic Misconduct.
+"""
+
+user_semi_minutes = int(input("Please enter the number of minutes Semi has worked: "))
+user_semi_hours = int(input("Please enter the number of hours Semi has worked: "))
+user_semi_days = int(input("Please enter the number of days Semi has worked: "))
+
+user_daniel_minutes = int(input("enter the number of minutes Daniel has worked: "))
+user_daniel_hours = int(input("Please enter the number of hours Daniel has worked: "))
+user_daniel_days = int(input("Please enter the number of days Daniel has worked: "))
+
+
+"""
+calculating total days both ca's worked
+"""
+# need to account for total_ca_hours being greater than 24 because thats an additional day that needs to be added to total_ca_days
+# total_ca_minutes being divisible by 60 because that's an hour that needs to be added to total_ca_hours
+
+total_ca_minutes = (user_semi_minutes + user_daniel_minutes)%60
+total_ca_hours = ((user_semi_hours + user_daniel_hours) + (total_ca_minutes // 60)) % 24
+total_hours_as_days = ((user_semi_hours + user_daniel_hours) + (total_ca_minutes // 60))
+total_ca_days = (user_semi_days + user_daniel_days) + (total_hours_as_days // 24) + (total_ca_minutes // 1440)
+print("the total time both of them worked together is: ", total_ca_days , "days", total_ca_hours, "hours", "and", total_ca_minutes, "minutes.")
+
+"""
+Author: [Samantha Matthews]
+Assignment / Part: HW2 - Q5 (depending on the file name)
+Date due: 2022-09-29, 11:59pm
+I pledge that I have completed this assignment without
+collaborating with anyone else, in conformance with the
+NYU School of Engineering Policies and Procedures on
+Academic Misconduct.
+"""
+CREDIT_SUFFICIENCY_ONE = 64
+CREDIT_SUFFICIENCY_TWO = 40
+
+user_dean_permission = input("Do you have permission from the dean? [y/n]: ")
+user_advisor_permission = input("Do you have permission from your advisor? [y/n]: ")
+user_senior_status = input("Do you hold senior status? [y/n]: ")
+user_credits = int(input("How many credits do you have?: "))
+
+credit_requirements_to_graduate = user_credits >= CREDIT_SUFFICIENCY_ONE and (user_senior_status == "y" or user_credits == "Y") \
+or user_credits >= CREDIT_SUFFICIENCY_TWO and (user_advisor_permission == "Y" or user_advisor_permission == "y")
+dean_requirement_to_graduate = user_dean_permission == "y" or user_dean_permission == "Y"
+
+print("This student can graduate: ", credit_requirements_to_graduate or dean_requirement_to_graduate)
+
+
+
+
