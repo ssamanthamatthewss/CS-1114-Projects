@@ -1,0 +1,208 @@
+"""
+Author: [Samantha Matthews]
+Assignment / Part: HW7 - Q1 (depending on the file name)
+Date due: 2022-11-11, 12:00pm
+I pledge that I have completed this assignment without
+collaborating with anyone else, in conformance with the
+NYU School of Engineering Policies and Procedures on
+Academic Misconduct.
+"""
+
+
+def is_haiku(input_string):
+	line_lst = input_string.split("/")
+	if len(line_lst)  != 3:
+		return False
+	if len(line_lst[0].split(",")) !=5:
+		return False
+	if len(line_lst[1].split(",")) != 7:
+		return False
+	if len(line_lst[2].split(",")) !=5:
+		return False
+	else:
+		return True
+
+
+def main():
+	print(is_haiku("clouds ,mur,mur ,dark,ly/it ,is ,a ,blin,ding ,ha,bit/ga,zing ,at ,the ,moon"))
+
+main()
+
+"""
+Author: [Samantha Matthews]
+Assignment / Part: HW7 - Q3 (depending on the file name)
+Date due: 2022-11-11, 12:00pm
+I pledge that I have completed this assignment without
+collaborating with anyone else, in conformance with the
+NYU School of Engineering Policies and Procedures on
+Academic Misconduct.
+"""
+def is_haiku(input_string):
+	line_lst = input_string.split("/")
+	if len(line_lst)  != 3:
+		return False
+	if len(line_lst[0].split(",")) !=5:
+		return False
+	if len(line_lst[1].split(",")) != 7:
+		return False
+	if len(line_lst[2].split(",")) !=5:
+		return False
+	else:
+		return True
+def haiku_string_parser(input_string):
+	if is_haiku(input_string) == True:
+		nested_list = input_string.split("/")
+		nested_list[0] = nested_list[0].split(",")
+		nested_list[0] = "".join(nested_list[0])
+		nested_list[1] = nested_list[1].split(",")
+		nested_list[1] = "".join(nested_list[1])
+		nested_list[2] = nested_list[2].split(",")
+		nested_list[2] = "".join(nested_list[2])
+
+		nested_list = "\n".join(nested_list)
+		return nested_list
+
+	else:
+		return ''
+
+
+
+def main():
+	haiku_string = "clouds ,mur,mur ,dark,ly/it ,is ,a ,blin,ding ,ha,bit/ga,zing ,at ,the ,moon"
+	formatted_haiku = haiku_string_parser(haiku_string)
+	print(formatted_haiku)
+main()"""
+Author: [Samantha Matthews]
+Assignment / Part: HW7 - Q4 (depending on the file name)
+Date due: 2022-11-11, 12:00pm
+I pledge that I have completed this assignment without
+collaborating with anyone else, in conformance with the
+NYU School of Engineering Policies and Procedures on
+Academic Misconduct.
+"""
+from dance_dance_revolution import DanceDanceRevolution
+GAME = DanceDanceRevolution()
+
+
+def get_game_parameters():
+	user_steps = int(input("How many steps would you like to memorize? (positive non-zero integers only): "))
+	while user_steps <= 0:
+		user_steps = (input("WARNING: Please enter a positive non-zero integer value. : "))
+
+	user_speed = float(input("How fast would you like the game to run? (positive non-zero numerical values only) "))
+	while user_speed <= 0:
+		user_speed = float(input("WARNING: Please enter a positive non-zero numerical value. : "))
+	user_input_tuple = (user_steps, user_speed)
+	print(user_input_tuple)
+	# GAME.set_amount(user_steps)
+	# GAME.set_speed(user_speed)
+	return user_input_tuple
+
+
+def get_user_answers():
+	user_direction_list = []
+	user_direction = input("Enter a direction (U/D/L/R) or 'DONE' to finish:")
+	if user_direction == "DONE":
+		print("Please enter at least one answer before selecting 'DONE'.")
+	elif user_direction != "DONE":
+		user_direction_list.append(user_direction)
+	user_direction = input("Enter a direction (U/D/L/R) or 'DONE' to finish: ")
+	user_direction_list.append(user_direction)
+	while user_direction != "DONE":
+		user_direction = input("Enter a direction (U/D/L/R) or 'DONE' to finish: ")
+		user_direction_list.append(user_direction)
+	user_direction_list.pop()
+	return user_direction_list
+
+
+def run_game():
+	user_steps, user_speed = get_game_parameters()
+	
+	GAME.set_amount(user_steps)
+	GAME.set_speed(user_speed)
+	GAME.play_sequence()
+
+	user_direction_list = get_user_answers()
+	print(user_direction_list)
+
+	if GAME.check_answers(user_direction_list):
+		print("Win")
+	else:
+		print("Lose")
+
+
+def main():
+	run_game()
+
+
+main()
+
+
+
+"""
+Author: [Samantha Matthews]
+Assignment / Part: HW7 - Q4 (depending on the file name)
+Date due: 2022-11-11, 12:00pm
+I pledge that I have completed this assignment without
+collaborating with anyone else, in conformance with the
+NYU School of Engineering Policies and Procedures on
+Academic Misconduct.
+"""
+from dance_dance_revolution import DanceDanceRevolution
+GAME = DanceDanceRevolution()
+
+
+def get_game_parameters():
+	user_steps = int(input("How many steps would you like to memorize? (positive non-zero integers only): "))
+	while user_steps <= 0:
+		user_steps = (input("WARNING: Please enter a positive non-zero integer value. : "))
+
+	user_speed = float(input("How fast would you like the game to run? (positive non-zero numerical values only) "))
+	while user_speed <= 0:
+		user_speed = float(input("WARNING: Please enter a positive non-zero numerical value. : "))
+	user_input_tuple = (user_steps, user_speed)
+	print(user_input_tuple)
+	# GAME.set_amount(user_steps)
+	# GAME.set_speed(user_speed)
+	return user_input_tuple
+
+
+def get_user_answers():
+	user_direction_list = []
+	user_direction = input("Enter a direction (U/D/L/R) or 'DONE' to finish:")
+	if user_direction == "DONE":
+		print("Please enter at least one answer before selecting 'DONE'.")
+	elif user_direction != "DONE":
+		user_direction_list.append(user_direction)
+	user_direction = input("Enter a direction (U/D/L/R) or 'DONE' to finish: ")
+	user_direction_list.append(user_direction)
+	while user_direction != "DONE":
+		user_direction = input("Enter a direction (U/D/L/R) or 'DONE' to finish: ")
+		user_direction_list.append(user_direction)
+	user_direction_list.pop()
+	return user_direction_list
+
+
+def run_game():
+	user_steps, user_speed = get_game_parameters()
+	
+	GAME.set_amount(user_steps)
+	GAME.set_speed(user_speed)
+	GAME.play_sequence()
+
+	user_direction_list = get_user_answers()
+	print(user_direction_list)
+
+	if GAME.check_answers(user_direction_list):
+		print("Win")
+	else:
+		print("Lose")
+
+
+def main():
+	run_game()
+
+
+main()
+
+
