@@ -1,0 +1,196 @@
+"""
+Sebastián Romero Cruz
+CS 1114
+Spring 2022
+NYU Tandon School of Engineering
+"""
+from enum import Enum
+
+
+class TouchType(Enum):
+    """
+    Represents the type of touch the user performs on a smartphone screen
+    """
+    SINGLE_TOUCH = 0
+    SWIPE = 1
+    DOUBLE_TAP = 2
+    HOLD = 3
+
+
+class SwipeDirection(Enum):
+    """
+    Represents the direction of swipe the user performs on a smartphone screen; NO_DIR for non-swipe touches
+    """
+    UP = 0
+    DOWN = 1
+    LEFT = 2
+    RIGHT = 3
+    NO_DIR = 4
+
+"""
+Author: [Samantha Matthews]
+Assignment / Part: HW6 - Q1 (depending on the file name)
+Date due: 2022-10-20, 11:59pm
+I pledge that I have completed this assignment without
+collaborating with anyone else, in conformance with the
+NYU School of Engineering Policies and Procedures on
+Academic Misconduct.
+"""
+
+from touchTypes import TouchType, SwipeDirection
+SINGLE_TOUCH = TouchType.SINGLE_TOUCH
+DOUBLE_TAP = TouchType.DOUBLE_TAP
+SWIPE = TouchType.SWIPE
+HOLD = TouchType.HOLD
+UP = SwipeDirection.UP
+DOWN = SwipeDirection.DOWN
+LEFT = SwipeDirection.LEFT
+RIGHT = SwipeDirection.RIGHT
+NO_DIRECTION = SwipeDirection.NO_DIR
+
+
+def give_haptic_feedback(touch_ratio):
+	if 0.0 < touch_ratio < 0.5:
+		print("Vibrating once...")
+	elif 0.5 <= touch_ratio <= 2.0:
+		print("Vibrating twice...")
+	elif touch_ratio > 2.0:
+		print("Vibrating thrice...")
+
+
+def register_touch(touch_type, direction=NO_DIRECTION, duration=0.1, strength=0.1):
+
+	if touch_type == SINGLE_TOUCH:
+		print("Registering single touch...")
+	elif touch_type == DOUBLE_TAP:
+		print("Registering double tap...")
+	elif touch_type == SWIPE:
+		print("Registering swipe...")
+		if direction == UP:
+			print("Exiting app...")
+		elif direction == LEFT or direction == RIGHT:
+			print("Changing page...")
+		elif direction == DOWN:
+			print("Scrolling up...")
+	elif touch_type == HOLD:
+		print("Registering hold...")
+		touch_ratio = strength / duration
+		give_haptic_feedback(touch_ratio)
+
+
+def get_touch():
+	user_touch_type = input("What type of touch did the user perform? [single/double/swipe/hold]: ")
+	user_touch_type = user_touch_type.upper()
+	user_touch_strength = float(input("How strong was the user's touch? [0.0 to 1.0]: "))
+	if user_touch_type == "SWIPE":
+		user_touch_type = SWIPE
+		user_direction = input("In what direction did the user swipe?: ").upper()
+		if user_direction == "UP":
+			user_direction = UP
+
+		elif user_direction == "DOWN":
+			user_direction = DOWN
+		elif user_direction == "LEFT":
+			user_direction = LEFT
+		elif user_direction == "RIGHT":
+			user_direction = RIGHT
+		register_touch(user_touch_type, user_direction, duration=0.1, strength=0.1)
+	elif user_touch_type == "HOLD":
+		user_touch_type = HOLD
+		user_touch_duration = float(input("For how long did the user hold the touch?: "))
+		register_touch(user_touch_type, direction=NO_DIRECTION, duration=user_touch_duration, strength=user_touch_strength)
+
+
+def main():
+	get_touch()
+
+
+main()
+"""
+Author: [Samantha Matthews]
+Assignment / Part: HW6 - Q1 (depending on the file name)
+Date due: 2022-10-20, 11:59pm
+I pledge that I have completed this assignment without
+collaborating with anyone else, in conformance with the
+NYU School of Engineering Policies and Procedures on
+Academic Misconduct.
+"""
+
+
+import math
+
+def get_decimal_time(conventional_hour,minute, second):
+	#convert, hours, days, seconds into seconds
+	total_conventional_second = ((conventional_hour * 3600) + (minute * 60) + second)
+	french_hours = (total_conventional_second // 10000)
+	total_conventional_second = total_conventional_second % 10000 #minutes and seconds
+
+	french_minutes = total_conventional_second // 100
+	french_seconds = total_conventional_second % 100
+	return("{}:{}:{}".format(french_hours, french_minutes, french_seconds))
+
+
+
+
+def get_decimal_date( month, day, year):
+
+	if month == 1:
+		revolutionary_month = "Nivôse"
+	elif month == 2:
+		revolutionary_month = "Pluviôse"
+	elif month == 3:
+		revolutionary_month = "Ventôse"
+	elif month == 4:
+		revolutionary_month = "Germinal"
+	elif month == 5:
+		revolutionary_month = "Floréal"
+	elif month == 6:
+		revolutionary_month = "Prairial"
+	elif month == 7:
+		revolutionary_month = "Messidor"
+	elif month == 8:
+		revolutionary_month = "Thermidor"
+	elif month == 9:
+		revolutionary_month = "Fructidor"
+	elif month == 10:
+		revolutionary_month = "Vendémiaire"
+	elif month == 11:
+		revolutionary_month = "Brumaire"
+	elif month == 12:
+		revolutionary_month = "Frimaire"
+
+	revolutionary_year = year - 1792
+	revolutionary_decade = math.ceil(day/10)
+	return ("{} {} Year {}, Décade {}".format(day, revolutionary_month, revolutionary_year, revolutionary_decade))
+
+
+
+
+
+def get_french_datetime(georgian_datetime):
+	space_index = georgian_datetime.find(" ")
+	time = georgian_datetime[0:space_index]
+	date = georgian_datetime[space_index +1:]
+	colon_index_1 = time.find(":")
+	colon_index_2 = time.find(":",colon_index_1+1)
+	hours = int(time[0:colon_index_1])
+	minutes = int(time[colon_index_1+1:colon_index_2])
+	seconds = int(time[colon_index_2+1:])
+	slash_index_1 = date.find("/")
+	slash_index_2 = date.find("/",colon_index_1+1)
+	day = int(date[0:slash_index_1])
+	month = int(date[slash_index_1+1:slash_index_2])
+	year = int(date[slash_index_2+1:])
+
+	decimal_time = get_decimal_time(hours, minutes, seconds)
+	decimal_date = get_decimal_date(day, month, year)
+	return("{}\n{}".format(decimal_time, decimal_date))
+
+def main():
+	gregorian_datetime = "16:07:46 03/22/2022"
+	french_datetime = get_french_datetime(gregorian_datetime)
+	print(french_datetime)
+
+
+
+main()
