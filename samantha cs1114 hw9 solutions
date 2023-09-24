@@ -1,0 +1,58 @@
+def get_chord_dictionary(filepath):
+	try:
+		filepath = open(filepath, "r")
+	except FileNotFoundError:
+		return {}
+	chord_dictionary = {}
+	filepath = filepath.readline()
+	filepath = filepath.strip().split(",")
+	root, chord_name, notes = filepath
+	notes = tuple(notes.split("-"))
+	for line in filepath:
+		if root not in chord_dictionary:
+			chord_dictionary[root] = {chord_name: notes}
+		else:
+			chord_dictionary[root][chord_name] = notes
+
+	return chord_dictionary
+
+
+def get_possible_chords(list_of_notes,chord_dictionary ):
+	list_to_tuple = []
+	list_of_values = []
+	root = list_of_notes[0]
+	for roots in list_of_notes:
+		if root in chord_dictionary.keys():
+			values = chord_dictionary[roots].values()
+			for tuples in values:
+				list_of_values.append(list(tuples))
+			for lists in values:
+				if roots in lists:
+					list_to_tuple.append(root + chord_dictionary[roots])
+
+	return tuple(list_to_tuple)
+
+def get_chord_progression(chord_progression, chords):
+	list_of_tuples = []
+	try:
+		chord_progression = open(chord_progression, "r")
+	except FileNotFoundError:
+		return []
+	for line in chord_progression:
+		get_chord_dictionary(line)
+		list_of_tuples.append(get_possible_chords(chords))
+
+
+
+
+	return list_of_tuples
+def write_progression_file():
+	pass
+
+def main():
+	get_chord_dictionary()
+	get_possible_chords()
+	get_chord_progression()
+
+main()
+
